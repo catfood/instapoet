@@ -1,0 +1,16 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "InstaPoet";
+}
+
+<h1>InstaPoet is a web application that makes <em>you</em> a brilliant poet without having to work hard!</h1>
+
+<p>Here is your poem:</p>
+
+<div class="poem">
+    <!-- this is gross; don't add weird methods like this to your model. -->
+    @(Model.syllables(5))@(Model.randomPunctuation())<br />
+    @(Model.syllables(7))@(Model.randomPunctuation())<br />
+    @(Model.syllables(5))@(Model.randomPunctuation(true))<br />
+</div>
