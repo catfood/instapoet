@@ -23,15 +23,21 @@ namespace InstaPoet.Pages
 
         public void OnGet()
         {
-            words = getWords();
+            const string defaultTheme = "ringing+in+the+ears";
+            string theme = Request.Query["theme"].FirstOrDefault();
+            words = getWords(theme); // urlencode it tho
+            if (words.Count <= 0)
+            {
+                words = getWords();
+            }
             rnd = new Random();
         }
 
-        private List<DatamuseWord> getWords()
+        private List<DatamuseWord> getWords(string theme = null)
         {
             var client = new WebClient();
-            string theme = Request.Query["theme"].FirstOrDefault() ?? "ringing+in+the+ears";
-            var json = client.DownloadString($"https://api.datamuse.com/words?ml={theme}&md=s");
+            string url = (theme == null) ? $"https://api.datamuse.com/words?md=s" : $"https://api.datamuse.com/words?ml={theme}&md=s";
+            var json = client.DownloadString(url);
             var words = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DatamuseWord>>(json);
             return words;
         }
@@ -57,7 +63,7 @@ namespace InstaPoet.Pages
                 result += " ";
                 result += nextWord.word;
             }
-            return result.Substring(1); // drop the leading space
+            return result.Substring(1,1).ToUpper() + result.Substring(2); // initial cap; drop the leading space
         }
     }
 }
