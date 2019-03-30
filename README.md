@@ -1,2 +1,4 @@
-# shiny-flap
-Little .NET demo application
+# instapoet
+
+Quick and easy haiku writing for anyone!
+
