@@ -18,6 +18,11 @@ namespace InstaPoet.Pages
 
     public class IndexModel : PageModel
     {
+        public bool WeirdQuery
+        {
+            get { return words.Count() == 0; }
+        }
+
         private List<DatamuseWord> words;
         private Random rnd;
 
@@ -25,13 +30,7 @@ namespace InstaPoet.Pages
         {
             const string defaultTheme = "ringing+in+the+ears";
             string theme = Request.Query["theme"].FirstOrDefault();
-            words = getWords(theme); // urlencode it tho
-/*
-            if (words.Count <= 0)
-            {
-                words = getWords();
-            }
-*/
+            words = getWords(theme ?? defaultTheme); // urlencode it tho
             rnd = new Random();
         }
 
@@ -39,14 +38,7 @@ namespace InstaPoet.Pages
         {
             var client = new WebClient();
             string url;
-            if (theme == null || theme == "")
-            {
-                url = "https://api.datamuse.com/words?md=s";
-            }
-            else
-            {
-                url = $"https://api.datamuse.com/words?ml={theme}&md=s";
-            }
+            url = $"https://api.datamuse.com/words?ml={theme}&md=s&max=500";
             var json = client.DownloadString(url);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<List<DatamuseWord>>(json);
         }
