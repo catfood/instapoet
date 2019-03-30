@@ -38,7 +38,15 @@ namespace InstaPoet.Pages
         private List<DatamuseWord> getWords(string theme = null)
         {
             var client = new WebClient();
-            string url = (theme == null) ? "https://api.datamuse.com/words?md=s" : $"https://api.datamuse.com/words?ml={theme}&md=s";
+            string url;
+            if (theme == null || theme == "")
+            {
+                url = "https://api.datamuse.com/words?md=s";
+            }
+            else
+            {
+                url = $"https://api.datamuse.com/words?ml={theme}&md=s";
+            }
             var json = client.DownloadString(url);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<List<DatamuseWord>>(json);
         }
