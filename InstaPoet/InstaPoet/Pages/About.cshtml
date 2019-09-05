@@ -1,10 +1,11 @@
 ﻿@page
+@using System.Net
 @model AboutModel
 @{
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@Model.Message</h3>
+<h3>@WebUtility.HtmlDecode(Model.Message)</h3>
 
 <p>I made this fun thing for demo purposes a little while ago. It uses the API tools at
 <a href="api.datamuse.com">datamuse.com</a> to pick out words on the theme you choose, and

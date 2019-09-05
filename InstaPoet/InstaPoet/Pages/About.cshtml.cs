@@ -12,7 +12,7 @@ namespace InstaPoet.Pages
 
         public void OnGet()
         {
-            Message = "Your application description page.";
+            Message = "About the InstaPoet &trade; web application.";
         }
     }
 }
